@@ -1,0 +1,54 @@
+import java.util.PriorityQueue;
+
+class WeatherAlert implements Comparable<WeatherAlert> {
+    private int severity;
+    private String message;
+
+    public WeatherAlert(int severity, String message) {
+        this.severity = severity;
+        this.message = message;
+    }
+
+    @Override
+    public int compareTo(WeatherAlert other) {
+        // Compare alerts based on severity
+        return Integer.compare(other.severity, this.severity);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
+class WeatherAlertApp {
+    private PriorityQueue<WeatherAlert> alertQueue;
+
+    public WeatherAlertApp() {
+        alertQueue = new PriorityQueue<>();
+    }
+
+    public void addAlert(int severity, String message) {
+        WeatherAlert alert = new WeatherAlert(severity, message);
+        alertQueue.add(alert);
+    }
+
+    public String getTopAlert() {
+        if (!alertQueue.isEmpty()) {
+            return alertQueue.peek().getMessage();
+        } else {
+            return "No alerts";
+        }
+    }
+
+    public static void main(String[] args) {
+        WeatherAlertApp app = new WeatherAlertApp();
+
+        // Adding sample alerts
+        app.addAlert(3, "High winds expected");
+        app.addAlert(5, "Heavy rain and flooding");
+        app.addAlert(2, "Partly cloudy with a chance of showers");
+
+        // Retrieving and printing the top alert
+        System.out.println("Top Alert: " + app.getTopAlert());
+    }
+}
